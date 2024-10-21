@@ -1,0 +1,22 @@
+---
+- name: creating http server
+  hosts:  node1
+  vars:
+    pack_name: httpd
+  tasks:
+    - name: creating {{pack_name}} server
+      package:  
+        name: "{{pack_name}}"
+        state:  present
+    - name: restarting {{pack_name}}
+      service:  
+        name: "{{pack_name}}"
+        state:  restarted
+    - name: creating index.html file
+      file:
+        path: /var/www/html/index.html
+        state:  touch
+    - name: adding data to index file
+      copy:
+        dest: /var/www/html/index.html
+        content:  "<html><h1> Hi this is ansible<h1><html>"

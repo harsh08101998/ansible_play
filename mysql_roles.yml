@@ -1,0 +1,5 @@
+---
+- name: importing mysql roles
+  hosts: all
+  roles:
+    - geerlingguy.mysql

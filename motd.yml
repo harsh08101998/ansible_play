@@ -1,0 +1,8 @@
+---
+- name: set motd
+  hosts: node1
+  tasks:
+    - name: set for node1
+      copy:
+        content: "{{message}}"
+        dest: /etc/motd

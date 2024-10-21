@@ -1,0 +1,6 @@
+---
+- name: using httpd-role
+  hosts: node2
+  roles:
+    - role: httpd-role
+      sysadmin: harsh@gmail.com

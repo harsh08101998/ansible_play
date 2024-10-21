@@ -1,0 +1,8 @@
+---
+- name: copy paste the file
+  hosts:  all
+  tasks:
+    - name: pasting file
+      copy:
+        src:  myhosts
+        dest: /etc

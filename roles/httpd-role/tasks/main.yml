@@ -1,0 +1,16 @@
+---
+# tasks file for httpd-role
+- name: installing httpd
+  yum:
+    name: httpd
+    state: present
+
+- name: starting httpd
+  service:
+    name: httpd
+    state: started
+    enabled: true
+- name: creating index.html using jinja2
+  template:
+    src: index.j2
+    dest: /var/www/html/index.html

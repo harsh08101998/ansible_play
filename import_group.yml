@@ -1,0 +1,13 @@
+---
+- name: multipele groups
+  group:
+   name: developer
+- name: security group
+  group:
+    name: security
+
+- name: install git
+  package:
+    name: git
+    state: present
+  tags: git

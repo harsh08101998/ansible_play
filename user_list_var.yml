@@ -1,0 +1,17 @@
+---
+- name: lists_vars
+  hosts: node1
+  vars:
+    users:
+      harsh:
+        username: harsh
+        uid: 1122
+        shell: /bin/sh
+      kumar:
+        username: kumar
+        uid: 1133
+        shell: /bin/bash
+  tasks:
+    - name: fav list
+      debug:
+        msg: this is users {{users['harsh']}}
