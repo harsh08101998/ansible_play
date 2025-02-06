@@ -1,0 +1,56 @@
+- name: configuring docker image
+  hosts: master
+  gather_facts: false
+  vars:
+    docker_username: 7988532204
+    docker_password: HK8570027091@k
+    docker_registry: https://registry-1.docker.io/v2
+  tasks:
+    #- name: copying code and Docker file to master node
+      #copy:
+        #src: /var/lib/jenkins/workspace/devops-project-git-connect/
+          #dest: /app
+
+        # Task to create image with dockerfile 
+        #
+
+    #- name: builing docker image
+    # community.docker.docker_image:
+        #  path: /app
+        #   name: jenkins-ansible-project
+        #tag: v1
+        #source: build
+        #build:
+        #  path: /app
+
+    # Tasks to login into docker hub
+    - name: login into docker hub
+      community.docker.docker_login:
+        username: "{{ docker_username }}"
+        password: "{{ docker_password }}"
+          # registry: "{{ docker_registry }}"
+
+  # Task to tag the Docker image for the registry
+    - name: Tag the Docker image
+      community.docker.docker_image:
+        name: jenkins-ansible-project
+        repository: "{{ docker_username }}/jenkins-ansible-project"
+        tag: v1
+        source: local
+
+    # Task to push the Docker image to the registry
+    - name: Push the Docker image to the registry
+      community.docker.docker_image:
+        name: "{{ docker_username }}/jenkins-ansible-project"
+        tag: v1
+        push: yes
+        source: local
+
+    # Task to run the Docker container
+    - name: Run the Docker container
+      community.docker.docker_container:
+        name: my-docker-container
+        image: "{{ docker_username }}/jenkins-ansible-project:v1"
+        state: started
+        ports:
+          - "5000:5000"

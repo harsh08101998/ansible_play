@@ -1,0 +1,25 @@
+- name: Deploy Docker Compose services
+  hosts: worker
+  gather_facts: false
+  tasks:
+    #become: yes  # If running as root is required
+    - name: Copy the docker-compose.yml file to the remote host
+      copy:
+        src: ./docker-compose.yml
+        dest: /app/docker-compose.yml
+        owner: ansible
+        group: ansible
+        mode: '0644'
+
+          #- name: Ensure Docker Compose is running the services
+          #community.docker.docker_compose_v2:
+          #project_src: /app
+          #restarted: yes  # Use `yes` to restart services if necessary
+          #remove_orphans: yes  # Remove orphan containers
+          #state: present  # If you want to ensure the containers are running
+
+    - name: Pull Docker images
+      community.docker.docker_compose_v2:
+        project_src: /app
+        pull: always  # Pull the latest images
+        state: present

@@ -1,0 +1,10 @@
+-  name: configuring vim in all nodes
+   hosts: all
+   gather_facts: false
+   tasks:
+    - name: installing required package
+      package:
+        name: 
+          - vim-enhanced 
+        state: installed
+      become: yes

@@ -1,0 +1,21 @@
+- name: pulling docker image and creating container
+  hosts: worker
+  gather_facts: false
+  vars:
+    docker_username: 7988532204
+    docker_password: HK8570027091@k
+  tasks:
+    #- name: pulling docker image
+      #community.docker.docker_image: 
+        #name: 7988532204/jenkins-ansible-project
+          #tag: v1 
+          #source: pull
+
+# creating container
+    - name: creating container
+      community.docker.docker_container:
+        name: my-docker-container
+        image: "7988532204/jenkins-ansible-project:v1"
+        state: started
+        ports:
+          - "5000:5000"
